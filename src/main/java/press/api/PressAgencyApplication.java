@@ -1,0 +1,13 @@
+package press.api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PressAgencyApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(PressAgencyApplication.class, args);
+    }
+
+}
