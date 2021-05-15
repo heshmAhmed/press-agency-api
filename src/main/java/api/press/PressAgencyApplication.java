@@ -1,4 +1,4 @@
-package press.api;
+package api.press;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
