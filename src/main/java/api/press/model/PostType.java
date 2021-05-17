@@ -6,7 +6,7 @@ public enum PostType {
     Cinema("cinema");
 
     public final String label;
-    private PostType(String label){
+    PostType(String label){
         this.label = label;
     }
 }

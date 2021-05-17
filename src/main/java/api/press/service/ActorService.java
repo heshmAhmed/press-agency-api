@@ -3,10 +3,8 @@ package api.press.service;
 import api.press.model.Actor;
 import api.press.repo.ActorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 
 @Service
 public class ActorService {

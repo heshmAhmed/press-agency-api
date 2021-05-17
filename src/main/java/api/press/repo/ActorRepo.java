@@ -48,10 +48,8 @@ public class ActorRepo{
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPassword(), actor.getPhone()
         ,actor.getPhoto(), actor.getUsername(), actor.getRole());
-         jdbcTemplate.update(con -> {
-            return QueryUtil.getInsertStat(con, "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role)" +
-                    " VALUES (?,?,?,?,?,?,?,?) ", values);
-        }, holder);
+         jdbcTemplate.update(con -> QueryUtil.getInsertStat(con, "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role)" +
+                 " VALUES (?,?,?,?,?,?,?,?) ", values), holder);
         actor.setId(Objects.requireNonNull(holder.getKey()).intValue());
         return actor.getId() == null ? Optional.empty() : Optional.of(actor);
     }
