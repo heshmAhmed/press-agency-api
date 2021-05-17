@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
     private Integer id;
-    private Actor editor;
+    private Integer editorID;
+    private String editorName;
     private String title;
     private String body;
     private Integer no_views;

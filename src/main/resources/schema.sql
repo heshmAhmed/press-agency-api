@@ -10,11 +10,6 @@ CREATE TABLE actor (
       role varchar(10) NOT NULL
 );
 
-CREATE TABLE post_type(
-    id INTEGER AUTO_INCREMENT primary key,
-    type varchar(20)
-);
-
 CREATE TABLE post(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     editor_id INTEGER NOT NULL ,
@@ -26,9 +21,8 @@ CREATE TABLE post(
     no_dislikes INTEGER NOT NULL,
     create_date datetime,
     state boolean NOT NULL,
-    type_id INTEGER NOT NULL,
-    FOREIGN KEY (editor_id) REFERENCES actor(id),
-    FOREIGN KEY (type_id) REFERENCES post_type(id)
+    type varchar(30) NOT NULL ,
+    FOREIGN KEY (editor_id) REFERENCES actor(id)
 );
 
 CREATE TABLE saved_post(
