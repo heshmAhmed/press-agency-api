@@ -44,17 +44,25 @@ public class ActorRepo{
     }
 
     public Optional<Actor> insert(Actor actor){
-        GeneratedKeyHolder holder = new GeneratedKeyHolder();
+        Optional<Actor> actorOptional;
+        String statement = "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role)" +
+                " VALUES (?,?,?,?,?,?,?,?) ";
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPassword(), actor.getPhone()
         ,actor.getPhoto(), actor.getUsername(), actor.getRole());
-         jdbcTemplate.update(con -> QueryUtil.getInsertStat(con, "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role)" +
-                 " VALUES (?,?,?,?,?,?,?,?) ", values), holder);
-        actor.setId(Objects.requireNonNull(holder.getKey()).intValue());
-        return actor.getId() == null ? Optional.empty() : Optional.of(actor);
+
+        try {
+            actor.setId(QueryUtil.insertRow(jdbcTemplate,statement, values));
+            actorOptional = Optional.of(actor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            actorOptional = Optional.empty();
+        }
+
+        return actorOptional;
     }
 
-    public Optional<Actor> update(Actor actor) throws DataIntegrityViolationException {
+    public Optional<Actor> update(Actor actor){
         String query = "update actor set first_name = ?, last_name = ?, email = ?, phone = ?, photo = ?, role = ? where id = ?";
         int rs = jdbcTemplate.update(query, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPhone(),
                 actor.getPhoto(), actor.getRole(),actor.getId());
