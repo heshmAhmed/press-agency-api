@@ -38,7 +38,7 @@ public abstract class QueryUtil {
      * @return generated id of inserted row
      * @throws Exception
      */
-    public static <T> Integer insertRow(JdbcTemplate jdbcTemplate, String statement, List<T> values) throws Exception{
+    public static <T> Integer insertRow(JdbcTemplate jdbcTemplate, String statement, List<T> values){
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> getInsertStat(con, statement, values), holder);
         return Objects.requireNonNull(holder.getKey()).intValue();

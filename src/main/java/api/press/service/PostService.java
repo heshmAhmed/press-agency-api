@@ -11,7 +11,6 @@ public class PostService {
     private PostRepo postRepo;
 
     public Post insertPost(Post post){
-        postRepo.insert(post).orElseThrow(()-> new RuntimeException("editor with id " + post.getEditorID() + " is not found!"));
-        return post;
+        return postRepo.insert(post);
     }
 }

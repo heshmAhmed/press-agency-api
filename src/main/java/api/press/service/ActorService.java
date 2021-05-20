@@ -16,7 +16,7 @@ public class ActorService {
         return actor;
     }
 
-    public Actor updateActor(Actor actor) throws RuntimeException{
+    public Actor updateActor(Actor actor){
         actorRepo.update(actor).orElseThrow(()->new RuntimeException("actor with id " + actor.getId() + " is not found!"));
         return actor;
     }

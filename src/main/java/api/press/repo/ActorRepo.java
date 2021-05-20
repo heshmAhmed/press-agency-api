@@ -4,6 +4,7 @@ import api.press.model.Actor;
 import api.press.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
@@ -50,15 +51,12 @@ public class ActorRepo{
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPassword(), actor.getPhone()
         ,actor.getPhoto(), actor.getUsername(), actor.getRole());
-
         try {
-            actor.setId(QueryUtil.insertRow(jdbcTemplate,statement, values));
+            actor.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
             actorOptional = Optional.of(actor);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (DuplicateKeyException e){
             actorOptional = Optional.empty();
         }
-
         return actorOptional;
     }
 
