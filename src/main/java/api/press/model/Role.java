@@ -1,12 +1,12 @@
 package api.press.model;
 
-public enum PostType {
-    POLITICS("politics"),
-    SPORTS("sports"),
-    CINEMA("cinema");
+public enum Role {
+    ADMIN("admin"),
+    VIEWER("viewer"),
+    EDITOR("editor");
     private final String label;
 
-    PostType(String label) {
+    Role(String label){
         this.label = label;
     }
 

@@ -26,8 +26,8 @@ public class PostRepo {
                             " VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         ArrayList<? super Object> values = new ArrayList<>();
-        Collections.addAll(values, post.getEditorID(), post.getEditorName(), post.getTitle(), post.getBody(), post.getNo_views(),
-                post.getNo_likes(), post.getNo_dislikes(), post.getCreate_date(), post.isState(), post.getPostType().label);
+        Collections.addAll(values, post.getEditor().getId(), post.getEditor().getUsername(), post.getTitle(), post.getBody(), post.getNo_views(),
+                post.getNo_likes(), post.getNo_dislikes(), post.getCreate_date(), post.isState(), post.getPostType().getLabel());
         post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
         return post;
     }

@@ -5,14 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
     private Integer id;
-    private Integer editorID;
-    private String editorName;
+    private Editor editor;
     private String title;
     private String body;
     private Integer no_views;
@@ -21,4 +22,5 @@ public class Post {
     private Date create_date;
     private boolean state;
     private PostType postType;
+    private List<Question> questions;
 }

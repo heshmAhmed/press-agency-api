@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Answer {
-    private Integer id;
+    private int id;
     private Question question;
     private String body;
-    private Date create_date;
+    private Data create_date;
 }

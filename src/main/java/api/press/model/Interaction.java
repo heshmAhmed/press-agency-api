@@ -4,17 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Question {
+public class Interaction {
     private Integer id;
-    private Post post;
     private Viewer viewer;
-    private String body;
-    private Date create_date;
-    private List<Answer> answers;
+    private Post post;
+    private boolean is_like;
 }
