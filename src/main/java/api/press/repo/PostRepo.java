@@ -1,6 +1,8 @@
 package api.press.repo;
 
 import api.press.model.Post;
+import api.press.model.PostType;
+import api.press.model.Role;
 import api.press.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,15 +22,37 @@ public class PostRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public Post insert(Post post){
-        String statement = "INSERT INTO post(editor_id, editor_name, title, body, no_views, no_likes, " +
-                            "no_dislikes, create_date, state, type)" +
-                            " VALUES (?,?,?,?,?,?,?,?,?,?)";
+//    public Post insert(Post post){
+//        String statement = "INSERT INTO post(editor_id, editor_name, title, body, no_views, no_likes, " +
+//                            "no_dislikes, create_date, state, type)" +
+//                            " VALUES (?,?,?,?,?,?,?,?,?,?)";
+//
+//        ArrayList<? super Object> values = new ArrayList<>();
+//        Collections.addAll(values, post.getEditor().getId(), post.getEditor().getUsername(), post.getTitle(), post.getBody(), post.getNo_views(),
+//                post.getNo_likes(), post.getNo_dislikes(), post.getCreate_date(), post.isState(), post.getPostType().getLabel());
+//        post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
+//        return post;
+//    }
 
-        ArrayList<? super Object> values = new ArrayList<>();
-        Collections.addAll(values, post.getEditor().getId(), post.getEditor().getUsername(), post.getTitle(), post.getBody(), post.getNo_views(),
-                post.getNo_likes(), post.getNo_dislikes(), post.getCreate_date(), post.isState(), post.getPostType().getLabel());
-        post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
-        return post;
+    public void insertPostTypes(){
+        for (PostType type:
+                PostType.values()) {
+            try {
+                jdbcTemplate.update("insert into post_type (type) values ('" + type.toString() + "')");
+            }catch (Exception e){
+
+            }
+        }
     }
+
+//    public void setPostTypesIds(){
+//        for (PostType type: PostType.values()) {
+//            try {
+//                type.id = jdbcTemplate.
+//                        queryForObject("select id from post_type where type = '" + type.name() + "'", Integer.class);
+//            }catch (Exception e){
+//                System.out.println("Type is not found");
+//            }
+//        }
+//    }
 }

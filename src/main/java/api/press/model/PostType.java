@@ -1,16 +1,9 @@
 package api.press.model;
 
 public enum PostType {
-    POLITICS("politics"),
-    SPORTS("sports"),
-    CINEMA("cinema");
-    private final String label;
+    POLITICS,
+    SPORTS,
+    CINEMA;
 
-    PostType(String label) {
-        this.label = label;
-    }
-
-    public String getLabel() {
-        return label;
-    }
+    public int id;
 }

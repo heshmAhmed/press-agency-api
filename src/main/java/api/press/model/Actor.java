@@ -1,6 +1,7 @@
 package api.press.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,6 @@ public abstract class Actor {
     private String email;
     private String phone;
     private String password;
-    private byte[] photo;
+    private String photo;
     private Role role;
 }

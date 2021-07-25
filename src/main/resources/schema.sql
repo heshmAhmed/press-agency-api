@@ -1,14 +1,24 @@
+CREATE TABLE post_type(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    type varchar(20) NOT NULL unique
+);
+
+CREATE TABLE role(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    role varchar(20) NOT NULL unique
+);
+
 CREATE TABLE actor (
-      id INTEGER AUTO_INCREMENT PRIMARY KEY,
-      first_name VARCHAR(50) NOT NULL,
-      last_name VARCHAR(50) NOT NULL,
-      email VARCHAR(250)NOT NULL,
-      password varchar(250) NOT NULL,
-      phone varchar(20) NOT NULL,
-      photo varchar(250),
-      username varchar(250) NOT NULL ,
-      role_id INTEGER NOT NULL,
-      FOREIGN KEY (role_id) REFERENCES role(id)
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(250)NOT NULL,
+    password varchar(250) NOT NULL,
+    phone varchar(20) NOT NULL,
+    photo varchar(250),
+    username varchar(250) NOT NULL ,
+    role_id INTEGER NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES role(id)
 );
 
 CREATE TABLE post(
@@ -63,13 +73,3 @@ CREATE TABLE answer(
     FOREIGN KEY (question_id) REFERENCES question(id)
 );
 
-
-CREATE TABLE post_type(
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    type varchar(20) NOT NULL
-);
-
-CREATE TABLE role(
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    role varchar(20) NOT NULL
-);

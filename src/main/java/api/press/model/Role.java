@@ -1,16 +1,9 @@
 package api.press.model;
 
 public enum Role {
-    ADMIN("admin"),
-    VIEWER("viewer"),
-    EDITOR("editor");
-    private final String label;
+    ADMIN,
+    VIEWER,
+    EDITOR;
 
-    Role(String label){
-        this.label = label;
-    }
-
-    public String getLabel() {
-        return label;
-    }
+    public int id;
 }
