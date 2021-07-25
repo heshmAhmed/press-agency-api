@@ -33,17 +33,16 @@ public class PostRepo {
 //        post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
 //        return post;
 //    }
-
-    public void insertPostTypes(){
-        for (PostType type:
-                PostType.values()) {
-            try {
-                jdbcTemplate.update("insert into post_type (type) values ('" + type.toString() + "')");
-            }catch (Exception e){
-
-            }
-        }
-    }
+//    public void insertPostTypes(){
+//        for (PostType type:
+//                PostType.values()) {
+//            try {
+//                jdbcTemplate.update("insert into post_type (type) values ('" + type.toString() + "')");
+//            }catch (Exception e){
+//
+//            }
+//        }
+//    }
 
 //    public void setPostTypesIds(){
 //        for (PostType type: PostType.values()) {
