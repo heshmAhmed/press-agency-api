@@ -22,15 +22,4 @@ public class PressAgencyApplication {
         SpringApplication.run(PressAgencyApplication.class, args);
     }
 
-    @Autowired
-    private ActorRepo actorRepo;
-    @Autowired
-    private PostRepo postRepo;
-    @Bean
-    public CommandLineRunner CommandLineRunnerBean() {
-        return (args) -> {
-
-        };
-    }
-
 }

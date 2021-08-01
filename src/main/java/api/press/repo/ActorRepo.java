@@ -2,6 +2,7 @@ package api.press.repo;
 
 import api.press.model.*;
 import api.press.util.QueryUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,10 +13,13 @@ import java.util.Optional;
 
 @Repository
 public class ActorRepo{
-    private final JdbcTemplate jdbcTemplate;
 
-    public ActorRepo(JdbcTemplate jdbcTemplate) {
+    private final JdbcTemplate jdbcTemplate;
+    private final ActorMapper actorFactory;
+
+    public ActorRepo(JdbcTemplate jdbcTemplate, ActorMapper actorFactory) {
         this.jdbcTemplate = jdbcTemplate;
+        this.actorFactory = actorFactory;
     }
 
     public Optional<Actor> findByEmail(String email){
@@ -23,7 +27,7 @@ public class ActorRepo{
         try {
             optionalActor = Optional.ofNullable(jdbcTemplate.queryForObject(
                     "select * from actor where email = ?",
-                    ActorFactory::createActor, email
+                    actorFactory, email
             ));
 
         }catch (Exception e){
@@ -37,7 +41,20 @@ public class ActorRepo{
         try {
             actorOptional = Optional.ofNullable(jdbcTemplate.queryForObject(
                     "select * from actor where username = ?",
-                    ActorFactory::createActor, username
+                    actorFactory, username
+            ));
+        }catch (Exception e){
+            actorOptional = Optional.empty();
+        }
+        return actorOptional;
+    }
+
+    public Optional<Actor> findByID(int id){
+        Optional<Actor> actorOptional;
+        try {
+            actorOptional = Optional.ofNullable(jdbcTemplate.queryForObject(
+                    "select * from actor where id = ?",
+                    actorFactory, id
             ));
         }catch (Exception e){
             actorOptional = Optional.empty();
@@ -62,17 +79,14 @@ public class ActorRepo{
     }
 
     public Optional<Actor> update(Actor actor){
-        String query = "update actor set first_name = ?, last_name = ?, email = ?, phone = ?, photo = ?, role = ? where id = ?";
+        String query = "update actor set first_name = ?, last_name = ?, email = ?, phone = ?, photo = ?, role_id = ? where id = ?";
         int rs = jdbcTemplate.update(query, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPhone(),
-                actor.getPhoto(), actor.getRole(),actor.getId());
+                actor.getPhoto(), actor.getRole().id,actor.getId());
         return rs == 1 ? Optional.of(actor) : Optional.empty();
     }
 
-    public Role getActorRole(int role_id){
-        Role role = Role.valueOf(
-                jdbcTemplate.queryForObject("select role from role where id = " +role_id,String.class));
-        return role;
-    }
+
+
 
 //
 //    public void insertRoles(){

@@ -2,7 +2,6 @@ package api.press.util;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,11 +12,11 @@ import java.util.Objects;
 public abstract class QueryUtil {
     /**
      *
-     * @param con
-     * @param statement
-     * @param values
+     * @param con Database connection
+     * @param statement Sql statement
+     * @param values List of values
      * @param <T>
-     * @return preparedStatement
+     * @return PreparedStatement object
      * @throws SQLException
      */
     private static <T> PreparedStatement getInsertStat(Connection con, String statement, List<T> values) throws SQLException {
@@ -32,11 +31,10 @@ public abstract class QueryUtil {
     /**
      *
      * @param jdbcTemplate
-     * @param statement
-     * @param values
+     * @param statement Sql statement
+     * @param values List of values
      * @param <T>
-     * @return generated id of inserted row
-     * @throws Exception
+     * @return ID generated of inserted row in DB
      */
     public static <T> Integer insertRow(JdbcTemplate jdbcTemplate, String statement, List<T> values){
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
