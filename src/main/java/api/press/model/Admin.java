@@ -1,9 +1,7 @@
 package api.press.model;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
 public class Admin extends Actor{
 }

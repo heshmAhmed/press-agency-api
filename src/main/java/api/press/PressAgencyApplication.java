@@ -1,25 +1,26 @@
 package api.press;
 
-import api.press.model.Actor;
-import api.press.model.Admin;
-import api.press.model.PostType;
-import api.press.model.Role;
-import api.press.repo.ActorRepo;
-import api.press.repo.PostRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.annotation.PostConstruct;
-
+/**
+ * athor_github: heshmAhmed
+ * version: 1
+ * since: 6/6/2021
+ */
 @SpringBootApplication
 public class PressAgencyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PressAgencyApplication.class, args);
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }

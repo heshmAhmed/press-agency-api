@@ -1,21 +1,19 @@
 package api.press.repo;
 
 import api.press.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
 public class ActorMapper implements RowMapper<Actor> {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final RoleRepo roleRepo;
 
-    public ActorMapper(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public ActorMapper(RoleRepo roleRepo) {
+        this.roleRepo = roleRepo;
     }
 
     @Override
@@ -33,13 +31,13 @@ public class ActorMapper implements RowMapper<Actor> {
     }
 
     private Actor createActor(int role_id){
-        Role role = getActorRole(role_id);
+        Role role = roleRepo.getActorRole(role_id);
         Actor actor;
-        if(role.equals(Role.ADMIN))
+        if(role.getName().equals(ActorType.ADMIN.name()))
             actor = new Admin();
-        else if (role.equals(Role.EDITOR))
+        else if (role.getName().equals(ActorType.EDITOR.name()))
             actor = new Editor();
-        else if (role.equals(Role.VIEWER))
+        else if (role.getName().equals(ActorType.VIEWER.name()))
             actor = new Viewer();
         else
             throw new IllegalStateException("Unexpected value: " + role_id);
@@ -47,13 +45,7 @@ public class ActorMapper implements RowMapper<Actor> {
         return actor;
     }
 
-    public Role getActorRole(int role_id)
-    {
-        Role role = Role.valueOf(
-                jdbcTemplate.queryForObject("select role from role where id = " + role_id, String.class));
-        role.id = role_id;
-        return role;
-    }
+
 
 
 

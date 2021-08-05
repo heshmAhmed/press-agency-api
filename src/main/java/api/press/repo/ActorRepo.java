@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
-
 @Repository
-public class ActorRepo{
+public class ActorRepo implements IActorRepo{
 
     private final JdbcTemplate jdbcTemplate;
     private final ActorMapper actorFactory;
@@ -22,6 +21,7 @@ public class ActorRepo{
         this.actorFactory = actorFactory;
     }
 
+    @Override
     public Optional<Actor> findByEmail(String email){
         Optional<Actor> optionalActor;
         try {
@@ -36,6 +36,7 @@ public class ActorRepo{
         return optionalActor;
     }
 
+    @Override
     public Optional<Actor> findByUsername(String username){
         Optional<Actor> actorOptional;
         try {
@@ -49,6 +50,7 @@ public class ActorRepo{
         return actorOptional;
     }
 
+    @Override
     public Optional<Actor> findByID(int id){
         Optional<Actor> actorOptional;
         try {
@@ -62,13 +64,14 @@ public class ActorRepo{
         return actorOptional;
     }
 
+    @Override
     public Optional<Actor> insert(Actor actor){
         Optional<Actor> actorOptional;
         String statement = "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role_id)" +
                 " VALUES (?,?,?,?,?,?,?,?) ";
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPassword(), actor.getPhone()
-        ,actor.getPhoto(), actor.getUsername(), actor.getRole().id);
+        ,actor.getPhoto(), actor.getUsername(), actor.getRole().getId());
         try {
             actor.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
             actorOptional = Optional.of(actor);
@@ -78,36 +81,16 @@ public class ActorRepo{
         return actorOptional;
     }
 
+    @Override
     public Optional<Actor> update(Actor actor){
         String query = "update actor set first_name = ?, last_name = ?, email = ?, phone = ?, photo = ?, role_id = ? where id = ?";
         int rs = jdbcTemplate.update(query, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPhone(),
-                actor.getPhoto(), actor.getRole().id,actor.getId());
+                actor.getPhoto(), actor.getRole().getId(),actor.getId());
         return rs == 1 ? Optional.of(actor) : Optional.empty();
     }
 
 
 
 
-//
-//    public void insertRoles(){
-//        for (Role role:
-//             Role.values()) {
-//            try {
-//                jdbcTemplate.execute("insert into role (role) values ('" + role.toString() + "')");
-//            }catch (Exception e){
-//                System.out.println("Role is already exists");
-//            }
-//        }
-////    }
-//
-//    public void setRoleIds() {
-//        for (Role role: Role.values()) {
-//            try {
-//                role.id = jdbcTemplate.
-//                        queryForObject("select id from role where role = '"+role.name()+"'", Integer.class);
-//            }catch (Exception e){
-//                System.out.println("Role is not found");
-//            }
-//        }
-//    }
+
 }

@@ -18,9 +18,12 @@ import java.sql.SQLNonTransientException;
 import java.util.*;
 
 @Repository
-public class PostRepo {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public class PostRepo implements IPostRepo{
+    private final JdbcTemplate jdbcTemplate;
+
+    public PostRepo(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
 //    public Post insert(Post post){
 //        String statement = "INSERT INTO post(editor_id, editor_name, title, body, no_views, no_likes, " +
