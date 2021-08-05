@@ -20,7 +20,7 @@ public class ActorController {
     }
 
     @PostMapping("/api/actor/insert")
-    public  ResponseEntity<Actor> insertActor(@RequestBody Person person){
+    public ResponseEntity insertActor(@RequestBody Person person){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/actor/insert").toUriString());
         try {
             return ResponseEntity.created(uri).body(actorService.insert(person));
