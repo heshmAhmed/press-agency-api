@@ -33,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
+                .authorizeRequests().antMatchers("/api/v1/actors/register").permitAll()
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
                 .addFilter(getJWTAuthenticationFilter())

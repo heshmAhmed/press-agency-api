@@ -16,14 +16,14 @@ import java.util.List;
 public class ActorController {
     private final ActorService actorService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity createActor(@RequestBody Actor person){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/actor/insert").toUriString());
         try {
             return ResponseEntity.created(uri).body(actorService.insert(person));
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
