@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Slf4j
@@ -22,6 +24,11 @@ public class ActorService implements IActorService {
     @Override
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
         return actorRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
+    public List<Actor> getAllActors() {
+        return this.actorRepo.getAllActors();
     }
 
     @SneakyThrows

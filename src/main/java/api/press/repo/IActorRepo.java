@@ -2,6 +2,7 @@ package api.press.repo;
 
 import api.press.model.Actor;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IActorRepo {
@@ -10,4 +11,5 @@ public interface IActorRepo {
     Optional<Actor> findByID(int id);
     Optional<Actor> insert(Actor actor);
     Optional<Actor> update(Actor actor);
+    List<Actor> getAllActors();
 }

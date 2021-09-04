@@ -2,21 +2,19 @@ package api.press.controller;
 
 import api.press.model.Actor;
 import api.press.service.ActorService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
+import java.util.List;
+
 @RequestMapping("api/v1/actors")
 @RestController
+@RequiredArgsConstructor
 public class ActorController {
     private final ActorService actorService;
-
-    public ActorController(ActorService actorService) {
-        this.actorService = actorService;
-    }
 
     @PostMapping
     public ResponseEntity createActor(@RequestBody Actor person){
@@ -40,8 +38,8 @@ public class ActorController {
     }
 
     @GetMapping
-    public ResponseEntity GetUsers(){
-        return new ResponseEntity("All users",HttpStatus.ACCEPTED);
+    public ResponseEntity<List<Actor>> GetUsers(){
+        return new ResponseEntity<>(actorService.getAllActors(),HttpStatus.ACCEPTED);
     }
 
 }

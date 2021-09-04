@@ -2,23 +2,20 @@ package api.press.repo;
 
 import api.press.model.*;
 import api.press.util.QueryUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class ActorRepo implements IActorRepo{
-
     private final JdbcTemplate jdbcTemplate;
     private final ActorMapper actorFactory;
-
-    public ActorRepo(JdbcTemplate jdbcTemplate, ActorMapper actorFactory) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.actorFactory = actorFactory;
-    }
 
     @Override
     public Optional<Actor> findByEmail(String email){
@@ -88,6 +85,9 @@ public class ActorRepo implements IActorRepo{
         return rs == 1 ? Optional.of(actor) : Optional.empty();
     }
 
-
+    @Override
+    public List<Actor> getAllActors(){
+        return this.jdbcTemplate.query("SELECT * FROM actor", actorFactory);
+    }
 
 }
