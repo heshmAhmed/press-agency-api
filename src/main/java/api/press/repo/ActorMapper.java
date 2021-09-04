@@ -11,7 +11,6 @@ import java.sql.SQLException;
 public class ActorMapper implements RowMapper<Actor> {
 
     private final RoleRepo roleRepo;
-
     public ActorMapper(RoleRepo roleRepo) {
         this.roleRepo = roleRepo;
     }
@@ -44,9 +43,6 @@ public class ActorMapper implements RowMapper<Actor> {
         actor.setRole(role);
         return actor;
     }
-
-
-
 
 
 }

@@ -2,7 +2,6 @@ package api.press.repo;
 
 import api.press.model.*;
 import api.press.util.QueryUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -88,8 +87,6 @@ public class ActorRepo implements IActorRepo{
                 actor.getPhoto(), actor.getRole().getId(),actor.getId());
         return rs == 1 ? Optional.of(actor) : Optional.empty();
     }
-
-
 
 
 

@@ -4,6 +4,4 @@ public enum PostType {
     POLITICS,
     SPORTS,
     CINEMA;
-
-    public int id;
 }

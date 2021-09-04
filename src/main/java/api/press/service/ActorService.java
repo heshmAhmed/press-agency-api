@@ -6,37 +6,29 @@ import api.press.util.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ActorServiceImp implements IActorService {
+public class ActorService implements IActorService {
     private final ActorRepo actorRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDetails loadUserByEmail(String email) throws UserPrincipalNotFoundException {
-        return actorRepo.findByEmail(email).map(
-                actor -> new User(actor.getEmail(), actor.getPassword(), new ArrayList(List.of(new SimpleGrantedAuthority(actor.getRole().getName())))))
-                .orElseThrow(() -> new UserPrincipalNotFoundException("User email not found"));
+    @Override
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        return actorRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(!Validator.validateEmail(username)) {
-            return actorRepo.findByUsername(username).map(
-                            actor -> new User(actor.getUsername(), actor.getPassword(), new ArrayList(List.of(new SimpleGrantedAuthority(actor.getRole().getName())))))
-                    .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+            return actorRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         }
         return loadUserByEmail(username);
     }
@@ -51,7 +43,7 @@ public class ActorServiceImp implements IActorService {
 
     @Override
     public Actor update(Actor actor){
-        log.info("Update user: " + actor.getUsername());
+        log.info("Update user: " + actor.getId());
         actorRepo.update(actor).orElseThrow(()->new RuntimeException("actor with id " + actor.getId() + " is not found!"));
         return actor;
     }
