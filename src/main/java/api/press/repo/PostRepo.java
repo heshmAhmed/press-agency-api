@@ -1,13 +1,14 @@
 package api.press.repo;
 
 import api.press.model.Post;
+import api.press.repo.IRepo.IPostRepo;
 import api.press.util.QueryUtil;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class PostRepo implements IPostRepo{
+public class PostRepo implements IPostRepo {
     private final JdbcTemplate jdbcTemplate;
 
     public PostRepo(JdbcTemplate jdbcTemplate) {

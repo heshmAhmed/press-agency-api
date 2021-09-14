@@ -1,5 +1,6 @@
-package api.press.repo;
+package api.press.repo.IRepo;
 
+import api.press.Exception.ActorException;
 import api.press.model.Actor;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public interface IActorRepo {
     Optional<Actor> findByUsername(String username);
     Optional<Actor> findByID(int id);
     Optional<Actor> insert(Actor actor);
-    Optional<Actor> update(Actor actor);
+    int update(Actor actor) throws ActorException;
     List<Actor> getAllActors();
+    void delete(Integer actorId) throws ActorException;
 }

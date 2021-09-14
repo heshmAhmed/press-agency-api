@@ -1,6 +1,7 @@
 package api.press.repo;
 
 import api.press.model.Interaction;
+import api.press.repo.IRepo.IInteractionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.Optional;

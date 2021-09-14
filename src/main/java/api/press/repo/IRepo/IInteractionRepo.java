@@ -1,4 +1,4 @@
-package api.press.repo;
+package api.press.repo.IRepo;
 
 import api.press.model.Interaction;
 

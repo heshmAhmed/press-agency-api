@@ -1,6 +1,9 @@
 package api.press.repo;
 
+import api.press.Exception.ActorException;
 import api.press.model.*;
+import api.press.repo.IRepo.IActorRepo;
+import api.press.util.ActorMapper;
 import api.press.util.QueryUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
@@ -13,7 +16,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class ActorRepo implements IActorRepo{
+public class ActorRepo implements IActorRepo {
     private final JdbcTemplate jdbcTemplate;
     private final ActorMapper actorFactory;
 
@@ -61,7 +64,7 @@ public class ActorRepo implements IActorRepo{
     }
 
     @Override
-    public Optional<Actor> insert(Actor actor){
+    public Optional<Actor> insert(Actor actor) throws ActorException{
         Optional<Actor> actorOptional;
         String statement = "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role_id)" +
                 " VALUES (?,?,?,?,?,?,?,?) ";
@@ -78,16 +81,20 @@ public class ActorRepo implements IActorRepo{
     }
 
     @Override
-    public Optional<Actor> update(Actor actor){
+    public int update(Actor actor) throws RuntimeException{
         String query = "update actor set first_name = ?, last_name = ?, email = ?, phone = ?, photo = ?, role_id = ? where id = ?";
-        int rs = jdbcTemplate.update(query, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPhone(),
+        return jdbcTemplate.update(query, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPhone(),
                 actor.getPhoto(), actor.getRole().getId(),actor.getId());
-        return rs == 1 ? Optional.of(actor) : Optional.empty();
     }
 
     @Override
     public List<Actor> getAllActors(){
         return this.jdbcTemplate.query("SELECT * FROM actor", actorFactory);
+    }
+
+    @Override
+    public void delete(Integer actorId) throws ActorException {
+        this.jdbcTemplate.update("delete from actor where id = " + actorId);
     }
 
 }

@@ -1,7 +1,7 @@
 package api.press.repo;
 
-import api.press.model.ActorType;
 import api.press.model.Role;
+import api.press.repo.IRepo.IRole;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

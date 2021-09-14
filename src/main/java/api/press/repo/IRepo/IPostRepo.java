@@ -1,4 +1,4 @@
-package api.press.repo;
+package api.press.repo.IRepo;
 
 public interface IPostRepo {
 

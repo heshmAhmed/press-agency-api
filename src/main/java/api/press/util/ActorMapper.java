@@ -1,7 +1,7 @@
-package api.press.repo;
+package api.press.util;
 
 import api.press.model.*;
-import org.springframework.jdbc.core.JdbcTemplate;
+import api.press.repo.RoleRepo;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import java.sql.ResultSet;

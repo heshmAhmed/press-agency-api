@@ -1,11 +1,14 @@
 package api.press.service;
 
+import api.press.Exception.ActorException;
 import api.press.model.Actor;
 import api.press.repo.ActorRepo;
 import api.press.util.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +26,7 @@ public class ActorService implements IActorService {
 
     @Override
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
-        return actorRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return actorRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
     @Override
@@ -31,27 +34,41 @@ public class ActorService implements IActorService {
         return this.actorRepo.getAllActors();
     }
 
+    @Override
+    public void delete(Integer actorId) throws ActorException {
+       this.actorRepo.delete(actorId);
+    }
+
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if(!Validator.validateEmail(username)) {
-            return actorRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            return actorRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
         }
         return loadUserByEmail(username);
     }
 
     @Override
-    public Actor insert(Actor actor){
+    public Actor insert(Actor actor) throws ActorException {
         log.info("Insert new user to database: " + actor.getUsername());
         actor.setPassword(passwordEncoder.encode(actor.getPassword()));
-        actorRepo.insert(actor).orElseThrow(() -> new RuntimeException("user already exists"));
+        actorRepo.insert(actor).orElseThrow(() -> new ActorException("User already exists!"));
         return actor;
     }
 
     @Override
-    public Actor update(Actor actor){
-        log.info("Update user: " + actor.getId());
-        actorRepo.update(actor).orElseThrow(()->new RuntimeException("actor with id " + actor.getId() + " is not found!"));
-        return actor;
+    public void update(Actor actor) throws ActorException {
+        int rs  = 0;
+        try {
+            rs = actorRepo.update(actor);
+        }catch (DuplicateKeyException e){
+            throw new ActorException("Email is used!");
+        }catch (DataIntegrityViolationException e){
+            throw new ActorException("Bad object");
+        }
+        if(rs != 1){
+            System.out.println(rs);
+            throw new ActorException("User with id " + actor.getId() + " not exists!");
+        }
     }
 }
