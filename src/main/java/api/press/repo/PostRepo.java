@@ -3,10 +3,13 @@ package api.press.repo;
 import api.press.model.Post;
 import api.press.repo.IRepo.IPostRepo;
 import api.press.util.QueryUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 
+@Slf4j
 @Repository
 public class PostRepo implements IPostRepo {
     private final JdbcTemplate jdbcTemplate;
@@ -15,7 +18,8 @@ public class PostRepo implements IPostRepo {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Post insert(Post post){
+    public Optional<Post> insert(Post post){
+        Optional<Post> optionalPost;
         String statement = "INSERT INTO post(editor_id, editor_name, title, body, no_views, no_likes, " +
                             "no_dislikes, create_date, state, type_id)" +
                             " VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -23,13 +27,16 @@ public class PostRepo implements IPostRepo {
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, post.getEditor().getId(), post.getEditor().getUsername(), post.getTitle(), post.getBody(), post.getNo_views(),
                 post.getNo_likes(), post.getNo_dislikes(), post.getCreate_date(), post.isState(), 3);
-        post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
-        return post;
+       try {
+           post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
+           optionalPost = Optional.of(post);
+       }catch (DataIntegrityViolationException e){
+           optionalPost = Optional.empty();
+       }
+        return optionalPost;
     }
 
-    public Integer like(Integer postId, Integer viewerId){
-        return 1;
-    }
+//    public Integer like(Integer postId, Integer viewerId){
 //    public void insertPostTypes(){
 //        for (PostType type:
 //                PostType.values()) {

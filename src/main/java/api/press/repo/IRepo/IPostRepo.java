@@ -1,5 +1,9 @@
 package api.press.repo.IRepo;
 
-public interface IPostRepo {
+import api.press.model.Post;
 
+import java.util.Optional;
+
+public interface IPostRepo {
+    Optional<Post> insert(Post post);
 }
