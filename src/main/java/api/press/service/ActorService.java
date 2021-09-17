@@ -3,6 +3,7 @@ package api.press.service;
 import api.press.Exception.ActorException;
 import api.press.model.Actor;
 import api.press.repo.ActorRepo;
+import api.press.repo.IRepo.IActorRepo;
 import api.press.util.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -21,7 +22,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ActorService implements IActorService {
-    private final ActorRepo actorRepo;
+    private final IActorRepo actorRepo;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -35,7 +36,7 @@ public class ActorService implements IActorService {
     }
 
     @Override
-    public void delete(Integer actorId) throws ActorException {
+    public void deleteActor(Integer actorId) throws ActorException {
        this.actorRepo.delete(actorId);
     }
 
@@ -49,7 +50,7 @@ public class ActorService implements IActorService {
     }
 
     @Override
-    public Actor insert(Actor actor) throws ActorException {
+    public Actor createActor(Actor actor) throws ActorException {
         log.info("Insert new user to database: " + actor.getUsername());
         actor.setPassword(passwordEncoder.encode(actor.getPassword()));
         actorRepo.insert(actor).orElseThrow(() -> new ActorException("User already exists!"));
@@ -57,7 +58,7 @@ public class ActorService implements IActorService {
     }
 
     @Override
-    public void update(Actor actor) throws ActorException {
+    public void updateActor(Actor actor) throws ActorException {
         int rs  = 0;
         try {
             rs = actorRepo.update(actor);

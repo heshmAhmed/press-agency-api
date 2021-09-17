@@ -9,9 +9,9 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 public interface IActorService extends UserDetailsService {
-    Actor insert(Actor actor) throws ActorException;
-    void update(Actor actor) throws ActorException;
+    Actor createActor(Actor actor) throws ActorException;
+    void updateActor(Actor actor) throws ActorException;
     UserDetails loadUserByEmail(String email) throws UserPrincipalNotFoundException;
     List<Actor> getAllActors();
-    void delete(Integer actorId) throws ActorException;
+    void deleteActor(Integer actorId) throws ActorException;
 }

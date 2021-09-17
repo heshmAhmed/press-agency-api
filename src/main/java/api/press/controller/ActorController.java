@@ -21,12 +21,12 @@ public class ActorController {
     @PostMapping
     public ResponseEntity register(@RequestBody Actor person) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/actor/insert").toUriString());
-        return ResponseEntity.created(uri).body(actorService.insert(person));
+        return ResponseEntity.created(uri).body(actorService.createActor(person));
     }
 
     @PutMapping
     public ResponseEntity update(@RequestBody Actor actor){
-        actorService.update(actor);
+        actorService.updateActor(actor);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
@@ -38,7 +38,7 @@ public class ActorController {
 
     @DeleteMapping("/{actorId}")
     public ResponseEntity DeleteActor(@PathVariable Integer actorId){
-       actorService.delete(actorId);
+       actorService.deleteActor(actorId);
        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
