@@ -18,7 +18,7 @@ import java.util.List;
 public class ActorController {
     private final ActorService actorService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity register(@RequestBody Actor person) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/actor/insert").toUriString());
         return ResponseEntity.created(uri).body(actorService.insert(person));
