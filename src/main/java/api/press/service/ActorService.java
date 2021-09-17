@@ -2,7 +2,6 @@ package api.press.service;
 
 import api.press.Exception.ActorException;
 import api.press.model.Actor;
-import api.press.repo.ActorRepo;
 import api.press.repo.IRepo.IActorRepo;
 import api.press.util.Validator;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +58,7 @@ public class ActorService implements IActorService {
 
     @Override
     public void updateActor(Actor actor) throws ActorException {
-        int rs  = 0;
+        int rs;
         try {
             rs = actorRepo.update(actor);
         }catch (DuplicateKeyException e){

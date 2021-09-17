@@ -1,7 +1,7 @@
 package api.press.controller;
 
 import api.press.model.Actor;
-import api.press.service.ActorService;
+import api.press.service.IActorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,16 +16,16 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ActorController {
-    private final ActorService actorService;
+    private final IActorService actorService;
 
     @PostMapping
-    public ResponseEntity register(@RequestBody Actor person) {
+    public ResponseEntity<Actor> register(@RequestBody Actor person) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/actor/insert").toUriString());
         return ResponseEntity.created(uri).body(actorService.createActor(person));
     }
 
     @PutMapping
-    public ResponseEntity update(@RequestBody Actor actor){
+    public ResponseEntity<HttpStatus> update(@RequestBody Actor actor){
         actorService.updateActor(actor);
         return new ResponseEntity<>(HttpStatus.OK);
 
@@ -37,7 +37,7 @@ public class ActorController {
     }
 
     @DeleteMapping("/{actorId}")
-    public ResponseEntity DeleteActor(@PathVariable Integer actorId){
+    public ResponseEntity<HttpStatus> DeleteActor(@PathVariable Integer actorId){
        actorService.deleteActor(actorId);
        return new ResponseEntity<>(HttpStatus.OK);
     }

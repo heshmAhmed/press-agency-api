@@ -3,9 +3,8 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 
 @Data
@@ -22,7 +21,7 @@ public class Actor implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority(this.role.getName()));
+        return List.of(new SimpleGrantedAuthority(this.role.getName()));
     }
 
     @Override
