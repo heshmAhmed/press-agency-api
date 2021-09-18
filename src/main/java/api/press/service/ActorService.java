@@ -26,7 +26,7 @@ public class ActorService implements IActorService {
 
     @Override
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
-        return actorRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        return actorRepo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User Not Found!"));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ActorService implements IActorService {
     public Actor createActor(Actor actor) throws ActorException {
         log.info("Insert new user to database: " + actor.getUsername());
         actor.setPassword(passwordEncoder.encode(actor.getPassword()));
-        actorRepo.insert(actor).orElseThrow(() -> new ActorException("User already exists!"));
+        actorRepo.insert(actor).orElseThrow(() -> new ActorException("User Already Exists!"));
         return actor;
     }
 
@@ -62,13 +62,13 @@ public class ActorService implements IActorService {
         try {
             rs = actorRepo.update(actor);
         }catch (DuplicateKeyException e){
-            throw new ActorException("Email is used!");
+            throw new ActorException("Email Is Used!");
         }catch (DataIntegrityViolationException e){
-            throw new ActorException("Bad object");
+            throw new ActorException("Bad Body Content!");
         }
         if(rs != 1){
             System.out.println(rs);
-            throw new ActorException("User with id " + actor.getId() + " not exists!");
+            throw new ActorException("User With Id " + actor.getId() + " Not Exists!");
         }
     }
 }
