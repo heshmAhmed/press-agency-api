@@ -31,8 +31,8 @@ public class PostService {
         return this.iPostRepo.getWallPosts();
     }
 
-    public void deletePost(Integer editorId, Integer id) throws PostException {
-        int rs = this.iPostRepo.delete(editorId, id);
+    public void deletePost(Integer id) throws PostException {
+        int rs = this.iPostRepo.delete(tokenUtil.getCurrentWebToken().getId(), id);
         if(rs == 0)
             throw new PostException("Post not found!");
     }
@@ -50,7 +50,7 @@ public class PostService {
             throw new PostException("Post not found!");
     }
 
-    public List<Post> getPosts(Integer editorId){
-        return this.iPostRepo.getPosts(editorId);
+    public List<Post> getPosts(){
+        return this.iPostRepo.getPosts(tokenUtil.getCurrentWebToken().getId());
     }
 }

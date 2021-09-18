@@ -2,13 +2,11 @@ package api.press.controller;
 
 import api.press.model.Post;
 import api.press.service.PostService;
-import api.press.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,7 +14,6 @@ import java.util.List;
 @RequestMapping("api/v1/editors")
 public class EditorController {
     private final PostService postService;
-    private final TokenUtil tokenUtil;
 
     @PostMapping("/posts")
     public ResponseEntity<HttpStatus> createPost(@RequestBody Post post){
@@ -26,7 +23,7 @@ public class EditorController {
 
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<HttpStatus> deletePost(@PathVariable Integer id){
-        this.postService.deletePost(tokenUtil.getCurrentWebToken().getId(), id);
+        this.postService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -38,7 +35,7 @@ public class EditorController {
 
     @GetMapping("posts")
     public  ResponseEntity<List<Post>> getHistory(){
-        return new ResponseEntity<>(postService.getPosts(tokenUtil.getCurrentWebToken().getId()), HttpStatus.OK);
+        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 
 }
