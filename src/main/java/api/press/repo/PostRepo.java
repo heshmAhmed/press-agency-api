@@ -48,8 +48,8 @@ public class PostRepo implements IPostRepo {
 
     @Override
     public int update(Post post) throws RuntimeException {
-        String query = "update post set title = ?, body = ?, type_id = ? where id = ? and editor_id = ?";
-        return jdbcTemplate.update(query, post.getTitle(), post.getBody(), post.getPostType().getId(),
+        String query = "update post set title = ?, body = ?, state = ?,type_id = ? where id = ? and editor_id = ?";
+        return jdbcTemplate.update(query, post.getTitle(), post.getBody(), null, post.getPostType().getId(),
                 post.getId(), post.getEditorId());
     }
 
