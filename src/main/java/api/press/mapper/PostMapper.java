@@ -20,7 +20,8 @@ public class PostMapper implements RowMapper<Post> {
     @Override
     public Post mapRow(ResultSet rs, int i) throws SQLException {
         return Post.builder().id(rs.getInt("id"))
-                .editor(mapEditor(rs))
+                .editorId(rs.getInt("editor_id"))
+                .editorName(rs.getString("editor_name"))
                 .title(rs.getString("title"))
                 .body(rs.getString("body"))
                 .noViews(rs.getInt("no_views"))
@@ -30,13 +31,5 @@ public class PostMapper implements RowMapper<Post> {
                 .state(rs.getBoolean("state"))
                 .postType(postTypeRepo.getPostType(rs.getInt("type_id")))
                 .build();
-    }
-
-    private Editor mapEditor(ResultSet rs) throws SQLException {
-        Editor editor = new Editor();
-        editor.setId(rs.getInt("editor_id"));
-        editor.setUsername(rs.getString("editor_name"));
-        editor.setRole(Role.builder().name(ActorType.EDITOR.name()).build());
-        return editor;
     }
 }

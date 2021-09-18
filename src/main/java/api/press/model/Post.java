@@ -14,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Post {
     private Integer id;
-    private Editor editor;
+    private Integer editorId;
+    private String editorName;
     private String title;
     private String body;
     private Integer noViews;
