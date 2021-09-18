@@ -30,4 +30,10 @@ public class EditorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/posts/{id}")
+    public ResponseEntity<HttpStatus> updatePost(@PathVariable Integer id, @RequestBody Post post){
+        postService.updatePost(id, post);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

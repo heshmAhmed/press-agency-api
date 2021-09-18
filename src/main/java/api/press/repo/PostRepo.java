@@ -18,7 +18,6 @@ import java.util.*;
 public class PostRepo implements IPostRepo {
     private final JdbcTemplate jdbcTemplate;
     private final PostMapper postMapper;
-
     public Optional<Post> insert(Post post){
         Optional<Post> optionalPost;
         String statement = "INSERT INTO post(editor_id, editor_name, title, body, no_views, no_likes, " +
@@ -45,6 +44,13 @@ public class PostRepo implements IPostRepo {
     @Override
     public int delete(Integer editorId, Integer id) {
        return this.jdbcTemplate.update("delete from post where id = " + id + " and editor_id = " + editorId);
+    }
+
+    @Override
+    public int update(Post post) throws RuntimeException {
+        String query = "update post set title = ?, body = ?, type_id = ? where id = ? and editor_id = ?";
+        return jdbcTemplate.update(query, post.getTitle(), post.getBody(), post.getPostType().getId(),
+                post.getId(), post.getEditorId());
     }
 
 

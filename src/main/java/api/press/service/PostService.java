@@ -7,8 +7,8 @@ import api.press.repo.IRepo.IPostRepo;
 import api.press.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 
@@ -35,6 +35,18 @@ public class PostService {
         int rs = this.iPostRepo.delete(editorId, id);
         if(rs == 0)
             throw new PostException("Post not found!");
+    }
 
+    public void updatePost(Integer postId, Post post){
+        post.setId(postId);
+        post.setEditorId(tokenUtil.getCurrentWebToken().getId());
+        int rs;
+        try {
+            rs = this.iPostRepo.update(post);
+        }catch (DataIntegrityViolationException | NullPointerException e){
+            throw new PostException("Bad body content!");
+        }
+        if(rs == 0)
+            throw new PostException("Post not found!");
     }
 }
