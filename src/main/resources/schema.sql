@@ -38,12 +38,12 @@ CREATE TABLE post(
 );
 
 CREATE TABLE saved_post(
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
     viewer_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
     create_date datetime,
     FOREIGN KEY (viewer_id) REFERENCES actor(id),
-    FOREIGN KEY (post_id) REFERENCES post(id)
+    FOREIGN KEY (post_id) REFERENCES post(id),
+    primary key (viewer_id, post_id)
 );
 
 CREATE TABLE interaction(
