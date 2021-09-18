@@ -15,10 +15,10 @@ public class Post {
     private Editor editor;
     private String title;
     private String body;
-    private Integer no_views;
-    private Integer no_likes;
-    private Integer no_dislikes;
-    private Date create_date;
+    private Integer noViews;
+    private Integer noLikes;
+    private Integer noDislikes;
+    private Date createDate;
     private boolean state;
     private PostType postType;
     private List<Question> questions;

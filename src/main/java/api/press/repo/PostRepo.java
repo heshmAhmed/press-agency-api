@@ -25,8 +25,8 @@ public class PostRepo implements IPostRepo {
                             " VALUES (?,?,?,?,?,?,?,?,?,?)";
 
         ArrayList<? super Object> values = new ArrayList<>();
-        Collections.addAll(values, post.getEditor().getId(), post.getEditor().getUsername(), post.getTitle(), post.getBody(), post.getNo_views(),
-                post.getNo_likes(), post.getNo_dislikes(), post.getCreate_date(), post.isState(), 3);
+        Collections.addAll(values, post.getEditor().getId(), post.getEditor().getUsername(), post.getTitle(), post.getBody(), post.getNoViews(),
+                post.getNoLikes(), post.getNoDislikes(), post.getCreateDate(), post.isState(), post.getPostType().getId());
        try {
            post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
            optionalPost = Optional.of(post);
