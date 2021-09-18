@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Component
 public class TokenUtil {
     private final String CLAIMS_ID = "id";
-    private final String CLAIMS_CREATED = "created";
     private final String CLAIMS_ROLE = "role";
 
     @Value("${auth.expiration}")
@@ -28,15 +28,12 @@ public class TokenUtil {
     private String TOKEN_SECRET = "press-agency-api-secret-key";
 
     public String generateAccessToke(Actor userDetails){
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIMS_ID, userDetails.getId());
-        claims.put(CLAIMS_CREATED, new Date().getTime());
-        claims.put(CLAIMS_ROLE, userDetails.getRole().getName());
-
         return JWT.create()
                 .withSubject(userDetails.getUsername())
                 .withExpiresAt(generateExpirationDate())
-                .withClaim("claims",claims)
+                .withIssuedAt(new Date())
+                .withClaim(CLAIMS_ID, userDetails.getId())
+                .withClaim(CLAIMS_ROLE, userDetails.getRole().getName())
                 .sign(Algorithm.HMAC256(TOKEN_SECRET.getBytes()));
     }
 
@@ -52,8 +49,8 @@ public class TokenUtil {
                     decodedJWT.getSubject(),
                     decodedJWT.getClaim("id").asInt(),
                     decodedJWT.getExpiresAt(),
-                    decodedJWT.getClaim("created").asDate(),
-                    decodedJWT.getClaim("role").asList(SimpleGrantedAuthority.class));
+                    decodedJWT.getClaim("iat").asDate(),
+                    List.of(new SimpleGrantedAuthority(decodedJWT.getClaim("role").asString())));
         }catch (Exception e){
             return null;
         }

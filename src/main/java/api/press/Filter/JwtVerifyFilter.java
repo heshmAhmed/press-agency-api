@@ -33,7 +33,7 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
             String token = header.substring("Bearer ".length());
             WebToken webToken = tokenUtil.mapJWT(token);
             securityContext.setAuthentication(
-                    new UsernamePasswordAuthenticationToken(webToken.getUsername(),
+                    new UsernamePasswordAuthenticationToken(webToken,
                             null,
                             webToken.getAuthority()));
         }
