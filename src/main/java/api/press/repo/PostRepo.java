@@ -1,8 +1,10 @@
 package api.press.repo;
 
+import api.press.mapper.PostMapper;
 import api.press.model.Post;
 import api.press.repo.IRepo.IPostRepo;
 import api.press.util.QueryUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,13 +12,11 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Slf4j
+@RequiredArgsConstructor
 @Repository
 public class PostRepo implements IPostRepo {
     private final JdbcTemplate jdbcTemplate;
-
-    public PostRepo(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final PostMapper postMapper;
 
     public Optional<Post> insert(Post post){
         Optional<Post> optionalPost;
@@ -34,6 +34,11 @@ public class PostRepo implements IPostRepo {
            optionalPost = Optional.empty();
        }
         return optionalPost;
+    }
+
+    @Override
+    public List<Post> getWallPosts() {
+       return this.jdbcTemplate.query("select * from post where state = 1", postMapper);
     }
 
 //    public Integer like(Integer postId, Integer viewerId){

@@ -1,19 +1,17 @@
-package api.press.util;
+package api.press.mapper;
 
 import api.press.model.*;
 import api.press.repo.RoleRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
+@RequiredArgsConstructor
 public class ActorMapper implements RowMapper<Actor> {
-
     private final RoleRepo roleRepo;
-    public ActorMapper(RoleRepo roleRepo) {
-        this.roleRepo = roleRepo;
-    }
 
     @Override
     public Actor mapRow(ResultSet rs, int i) throws SQLException {

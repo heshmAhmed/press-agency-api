@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -17,5 +19,9 @@ public class PostService {
     public void createPost(Post post){
         log.info("insert: " + post);
         this.iPostRepo.insert(post).orElseThrow(() -> new PostException("Bad Content Body"));
+    }
+
+    public List<Post> getWallPosts(){
+        return this.iPostRepo.getWallPosts();
     }
 }

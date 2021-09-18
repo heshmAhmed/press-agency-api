@@ -3,7 +3,7 @@ package api.press.repo;
 import api.press.Exception.ActorException;
 import api.press.model.*;
 import api.press.repo.IRepo.IActorRepo;
-import api.press.util.ActorMapper;
+import api.press.mapper.ActorMapper;
 import api.press.util.QueryUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;

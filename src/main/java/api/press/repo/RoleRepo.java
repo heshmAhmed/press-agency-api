@@ -1,17 +1,15 @@
 package api.press.repo;
 
 import api.press.model.Role;
-import api.press.repo.IRepo.IRole;
+import api.press.repo.IRepo.IRoleRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+@RequiredArgsConstructor
 @Repository
-public class RoleRepo implements IRole {
-
+public class RoleRepo implements IRoleRepo {
     private final JdbcTemplate jdbcTemplate;
-    public RoleRepo(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public Role getActorRole(int role_id)
