@@ -7,7 +7,6 @@ import api.press.repo.IRepo.IPostRepo;
 import api.press.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class PostService {
         post.setEditorName(webToken.getUsername());
         post.setEditorId(webToken.getId());
         log.info("insert: " + post);
-        this.iPostRepo.insert(post).orElseThrow(() -> new PostException("Bad Content Body!"));
+        this.iPostRepo.insert(post).orElseThrow(() -> new PostException("Bad content body!"));
     }
 
     public List<Post> getWallPosts(){
@@ -35,7 +34,7 @@ public class PostService {
     public void deletePost(Integer editorId, Integer id) throws PostException {
         int rs = this.iPostRepo.delete(editorId, id);
         if(rs == 0)
-            throw new PostException("Post Not Found!");
+            throw new PostException("Post not found!");
 
     }
 }
