@@ -1,6 +1,5 @@
 package api.press.service;
 
-import api.press.Exception.PostException;
 import api.press.model.Post;
 import api.press.model.WebToken;
 import api.press.repo.IRepo.IPostRepo;
@@ -24,17 +23,17 @@ public class PostService {
         post.setEditorName(webToken.getUsername());
         post.setEditorId(webToken.getId());
         log.info("insert: " + post);
-        this.iPostRepo.insert(post).orElseThrow(() -> new PostException("Bad content body!"));
+        this.iPostRepo.insert(post).orElseThrow(() -> new RuntimeException("Bad content body!"));
     }
 
     public List<Post> getWallPosts(){
         return this.iPostRepo.getWallPosts();
     }
 
-    public void deletePost(Integer id) throws PostException {
+    public void deletePost(Integer id) throws RuntimeException {
         int rs = this.iPostRepo.delete(tokenUtil.getCurrentWebToken().getId(), id);
         if(rs == 0)
-            throw new PostException("Post not found!");
+            throw new RuntimeException("Post not found!");
     }
 
     public void updatePost(Integer postId, Post post){
@@ -44,10 +43,10 @@ public class PostService {
         try {
             rs = this.iPostRepo.update(post);
         }catch (DataIntegrityViolationException | NullPointerException e){
-            throw new PostException("Bad body content!");
+            throw new RuntimeException("Bad body content!");
         }
         if(rs == 0)
-            throw new PostException("Post not found!");
+            throw new RuntimeException("Post not found!");
     }
 
     public List<Post> getPosts(){

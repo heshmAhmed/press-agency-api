@@ -1,6 +1,5 @@
 package api.press.service;
 
-import api.press.Exception.ActorException;
 import api.press.model.Actor;
 import api.press.repo.IRepo.IActorRepo;
 import api.press.util.Validator;
@@ -35,10 +34,10 @@ public class ActorService implements IActorService {
     }
 
     @Override
-    public void deleteActor(Integer actorId) throws ActorException {
+    public void deleteActor(Integer actorId) throws RuntimeException {
        int rs = this.actorRepo.delete(actorId);
        if(rs == 0)
-           throw new ActorException("User not found!");
+           throw new RuntimeException("User not found!");
     }
 
     @SneakyThrows
@@ -51,26 +50,24 @@ public class ActorService implements IActorService {
     }
 
     @Override
-    public Actor createActor(Actor actor) throws ActorException {
+    public Actor createActor(Actor actor) throws RuntimeException {
         log.info("Insert new user to database: " + actor.getUsername());
         actor.setPassword(passwordEncoder.encode(actor.getPassword()));
-        actorRepo.insert(actor).orElseThrow(() -> new ActorException("User already exists!"));
+        actorRepo.insert(actor).orElseThrow(() -> new RuntimeException("User already exists!"));
         return actor;
     }
 
     @Override
-    public void updateActor(Actor actor) throws ActorException {
+    public void updateActor(Actor actor) throws RuntimeException {
         int rs;
         try {
             rs = actorRepo.update(actor);
         }catch (DuplicateKeyException e){
-            throw new ActorException("Email is used!");
+            throw new RuntimeException("Email is used!");
         }catch (DataIntegrityViolationException e){
-            throw new ActorException("Bad body content!");
+            throw new RuntimeException("Bad body content!");
         }
-        if(rs != 1){
-            System.out.println(rs);
-            throw new ActorException("User with id " + actor.getId() + " not exists!");
-        }
+        if(rs != 1)
+            throw new RuntimeException("User with id " + actor.getId() + " not exists!");
     }
 }

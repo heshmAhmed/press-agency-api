@@ -9,7 +9,7 @@ public interface IPostRepo {
     Optional<Post> insert(Post post);
     List<Post> getWallPosts();
     int delete(Integer editorId,Integer id);
-    int update(Post post) throws RuntimeException;
+    int update(Post post);
     List<Post> getPosts(Integer editorId);
 
 }

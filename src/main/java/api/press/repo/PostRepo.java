@@ -1,6 +1,5 @@
 package api.press.repo;
 
-import api.press.Exception.PostException;
 import api.press.mapper.PostMapper;
 import api.press.model.Post;
 import api.press.repo.IRepo.IPostRepo;
@@ -47,7 +46,7 @@ public class PostRepo implements IPostRepo {
     }
 
     @Override
-    public int update(Post post) throws RuntimeException {
+    public int update(Post post){
         String query = "update post set title = ?, body = ?, state = ?,type_id = ? where id = ? and editor_id = ?";
         return jdbcTemplate.update(query, post.getTitle(), post.getBody(), null, post.getPostType().getId(),
                 post.getId(), post.getEditorId());

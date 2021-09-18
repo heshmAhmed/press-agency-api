@@ -1,6 +1,5 @@
 package api.press.repo;
 
-import api.press.Exception.ActorException;
 import api.press.model.*;
 import api.press.repo.IRepo.IActorRepo;
 import api.press.mapper.ActorMapper;
@@ -64,7 +63,7 @@ public class ActorRepo implements IActorRepo {
     }
 
     @Override
-    public Optional<Actor> insert(Actor actor) throws ActorException{
+    public Optional<Actor> insert(Actor actor){
         Optional<Actor> actorOptional;
         String statement = "INSERT INTO actor(first_name, last_name, email, password, phone, photo, username, role_id)" +
                 " VALUES (?,?,?,?,?,?,?,?) ";
@@ -81,7 +80,7 @@ public class ActorRepo implements IActorRepo {
     }
 
     @Override
-    public int update(Actor actor) throws RuntimeException{
+    public int update(Actor actor){
         String query = "update actor set first_name = ?, last_name = ?, email = ?, phone = ?, photo = ?, role_id = ? where id = ?";
         return jdbcTemplate.update(query, actor.getFirstname(), actor.getLastname(), actor.getEmail(), actor.getPhone(),
                 actor.getPhoto(), actor.getRole().getId(),actor.getId());
