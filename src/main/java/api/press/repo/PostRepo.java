@@ -1,5 +1,6 @@
 package api.press.repo;
 
+import api.press.Exception.PostException;
 import api.press.mapper.PostMapper;
 import api.press.model.Post;
 import api.press.repo.IRepo.IPostRepo;
@@ -41,26 +42,10 @@ public class PostRepo implements IPostRepo {
        return this.jdbcTemplate.query("select * from post where state = 1", postMapper);
     }
 
-//    public Integer like(Integer postId, Integer viewerId){
-//    public void insertPostTypes(){
-//        for (PostType type:
-//                PostType.values()) {
-//            try {
-//                jdbcTemplate.update("insert into post_type (type) values ('" + type.toString() + "')");
-//            }catch (Exception e){
-//
-//            }
-//        }
-//    }
+    @Override
+    public int delete(Integer editorId, Integer id) {
+       return this.jdbcTemplate.update("delete from post where id = " + id + " and editor_id = " + editorId);
+    }
 
-//    public void setPostTypesIds(){
-//        for (PostType type: PostType.values()) {
-//            try {
-//                type.id = jdbcTemplate.
-//                        queryForObject("select id from post_type where type = '" + type.name() + "'", Integer.class);
-//            }catch (Exception e){
-//                System.out.println("Type is not found");
-//            }
-//        }
-//    }
+
 }

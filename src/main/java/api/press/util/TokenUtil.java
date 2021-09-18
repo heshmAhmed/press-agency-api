@@ -9,6 +9,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -54,5 +55,9 @@ public class TokenUtil {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public WebToken getCurrentWebToken(){
+        return (WebToken) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
