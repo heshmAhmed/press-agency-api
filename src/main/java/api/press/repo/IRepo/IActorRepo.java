@@ -13,5 +13,5 @@ public interface IActorRepo {
     Optional<Actor> insert(Actor actor);
     int update(Actor actor) throws ActorException;
     List<Actor> getAllActors();
-    void delete(Integer actorId) throws ActorException;
+    int delete(Integer actorId);
 }

@@ -93,8 +93,8 @@ public class ActorRepo implements IActorRepo {
     }
 
     @Override
-    public void delete(Integer actorId) throws ActorException {
-        this.jdbcTemplate.update("delete from actor where id = " + actorId);
+    public int delete(Integer actorId) {
+        return this.jdbcTemplate.update("delete from actor where id = " + actorId);
     }
 
 }
