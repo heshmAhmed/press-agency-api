@@ -22,7 +22,7 @@ public class Post {
     private Integer noLikes;
     private Integer noDislikes;
     private Date createDate;
-    private boolean state;
+    private Boolean state;
     private PostType postType;
     private List<Question> questions;
 }

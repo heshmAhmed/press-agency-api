@@ -26,7 +26,7 @@ public class PostRepo implements IPostRepo {
 
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, post.getEditorId(), post.getEditorName(), post.getTitle(), post.getBody(), post.getNoViews(),
-                post.getNoLikes(), post.getNoDislikes(), post.getCreateDate(), post.isState(), post.getPostType().getId());
+                post.getNoLikes(), post.getNoDislikes(), post.getCreateDate(), post.getState(), post.getPostType().getId());
        try {
            post.setId(QueryUtil.insertRow(jdbcTemplate, statement, values));
            optionalPost = Optional.of(post);
