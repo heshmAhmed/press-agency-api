@@ -53,5 +53,10 @@ public class PostRepo implements IPostRepo {
                 post.getId(), post.getEditorId());
     }
 
+    @Override
+    public List<Post> getPosts(Integer editorId) {
+        return jdbcTemplate.query("select * from post where editor_id = " + editorId, postMapper);
+    }
+
 
 }

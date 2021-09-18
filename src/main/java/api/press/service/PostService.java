@@ -49,4 +49,8 @@ public class PostService {
         if(rs == 0)
             throw new PostException("Post not found!");
     }
+
+    public List<Post> getPosts(Integer editorId){
+        return this.iPostRepo.getPosts(editorId);
+    }
 }

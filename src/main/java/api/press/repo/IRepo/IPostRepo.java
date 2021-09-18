@@ -10,5 +10,6 @@ public interface IPostRepo {
     List<Post> getWallPosts();
     int delete(Integer editorId,Integer id);
     int update(Post post) throws RuntimeException;
+    List<Post> getPosts(Integer editorId);
 
 }
