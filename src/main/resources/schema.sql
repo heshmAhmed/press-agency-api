@@ -59,8 +59,8 @@ CREATE TABLE question(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     post_id INTEGER NOT NULL,
     viewer_id INTEGER NOT NULL,
-    body VARCHAR(250) NOT NULL,
-    create_date datetime,
+    body VARCHAR(250) NOT NULL ,
+    create_date datetime NOT NULL ,
     FOREIGN KEY (post_id) REFERENCES post(id),
     FOREIGN KEY (viewer_id) REFERENCES actor(id)
 );
