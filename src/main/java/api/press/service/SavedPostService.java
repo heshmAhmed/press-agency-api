@@ -1,11 +1,13 @@
 package api.press.service;
 
+import api.press.model.Post;
 import api.press.repo.IRepo.ISavedPostsRepo;
 import api.press.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -20,5 +22,9 @@ public class SavedPostService {
         }catch (DataIntegrityViolationException e){
             throw new RuntimeException("Bad body content!");
         }
+    }
+
+    public List<Post> getSavedPosts() {
+        return savedPostsRepo.get(tokenUtil.getCurrentWebToken().getId());
     }
 }
