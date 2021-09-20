@@ -21,7 +21,7 @@ public class ViewerController {
     private final QuestionService questionService;
 
     @PostMapping("/viewers/saved-posts")
-    public ResponseEntity addSavedPost(@RequestBody Map<String, Integer> requestBody){
+    public ResponseEntity<HttpStatus> addSavedPost(@RequestBody Map<String, Integer> requestBody){
         savedPostService.savePost(requestBody.get("postId"));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -41,5 +41,13 @@ public class ViewerController {
     public ResponseEntity<Question> addQuestion(@PathVariable Integer postId,
                                                 @RequestBody Question question){
         return new ResponseEntity<>(questionService.addQuestion(question, postId), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/posts/{postId}/questions/{questionId}")
+    public ResponseEntity<Question> updateQuestion(@PathVariable Integer postId,
+                                                @PathVariable Integer questionId,
+                                                @RequestBody Question question){
+        questionService.updateQuestion(question, postId, questionId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

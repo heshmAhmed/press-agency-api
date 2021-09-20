@@ -24,4 +24,18 @@ public class QuestionService {
         }
         return question;
     }
+
+    public void updateQuestion(Question question, Integer postId, Integer questionId){
+        question.setId(questionId);
+        question.setPostId(postId);
+        int rs;
+        try{
+            rs = questionRepo.update(question);
+        }catch (DataIntegrityViolationException e){
+            throw new RuntimeException("Bad body content!");
+        }
+
+        if(rs == 0)
+            throw new RuntimeException("Question not found!");
+    }
 }

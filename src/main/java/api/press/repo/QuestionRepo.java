@@ -27,4 +27,10 @@ public class QuestionRepo implements IQuestionRepo {
 
         return QueryUtil.insertRow(jdbcTemplate, statement, values);
     }
+
+    @Override
+    public int update(Question question) {
+        String query = "update question set body = ? where id = ? and post_id = ?";
+        return jdbcTemplate.update(query, question.getBody(), question.getId(), question.getPostId());
+    }
 }
