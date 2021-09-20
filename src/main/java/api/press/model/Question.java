@@ -12,9 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Question {
     private Integer id;
-    private Post post;
-    private Viewer viewer;
+    private Integer postId;
+    private Integer viewerId;
+    private String viewerName;
     private String body;
-    private Date create_date;
+    private Date createDate;
     private List<Answer> answers;
 }
