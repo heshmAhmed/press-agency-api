@@ -27,4 +27,10 @@ public class SavedPostService {
     public List<Post> getSavedPosts() {
         return savedPostsRepo.get(tokenUtil.getCurrentWebToken().getId());
     }
+
+    public void unSavePost(Integer postId) throws RuntimeException {
+        int rs = savedPostsRepo.unSavePost(postId, tokenUtil.getCurrentWebToken().getId());
+        if(rs == 0)
+            throw new RuntimeException("Post already not saved!");
+    }
 }

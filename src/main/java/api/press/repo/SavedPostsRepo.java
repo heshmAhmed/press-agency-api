@@ -26,4 +26,12 @@ public class SavedPostsRepo implements ISavedPostsRepo {
         return jdbcTemplate.query("select p.* from actor a join saved_post sp on a.id = sp.viewer_id\n" +
                 "join post p on sp.post_id = p.id where viewer_id = " + viewerId, postMapper);
     }
+
+    @Override
+    public int unSavePost(Integer postId, Integer viewerId) {
+        return jdbcTemplate.update("delete from saved_post where viewer_id = ? and post_id = ?",
+                viewerId, postId);
+    }
+
+
 }
