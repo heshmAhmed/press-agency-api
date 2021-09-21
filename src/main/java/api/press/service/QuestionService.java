@@ -28,6 +28,7 @@ public class QuestionService {
     public void updateQuestion(Question question, Integer postId, Integer questionId){
         question.setId(questionId);
         question.setPostId(postId);
+        question.setViewerId(tokenUtil.getCurrentWebToken().getId());
         int rs;
         try{
             rs = questionRepo.update(question);
