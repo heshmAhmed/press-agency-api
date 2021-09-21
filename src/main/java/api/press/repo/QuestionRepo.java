@@ -33,4 +33,11 @@ public class QuestionRepo implements IQuestionRepo {
         String query = "update question set body = ? where id = ? and post_id = ?";
         return jdbcTemplate.update(query, question.getBody(), question.getId(), question.getPostId());
     }
+
+    @Override
+    public int delete(Integer postId, Integer questionId, Integer viewerId) {
+        return jdbcTemplate.update("delete from question where id = " + questionId
+                        + " and post_id = " + postId
+                        + " and viewer_id = " + viewerId);
+    }
 }

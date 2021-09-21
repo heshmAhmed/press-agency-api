@@ -38,4 +38,11 @@ public class QuestionService {
         if(rs == 0)
             throw new RuntimeException("Question not found!");
     }
+
+    public void deleteQuestion(Integer postId, Integer questionId) throws RuntimeException {
+        int rs;
+        rs = questionRepo.delete(postId, questionId, tokenUtil.getCurrentWebToken().getId());
+       if(rs == 0)
+           throw new RuntimeException("Question not found!");
+    }
 }

@@ -50,4 +50,10 @@ public class ViewerController {
         questionService.updateQuestion(question, postId, questionId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/posts/{postId}/questions/{questionId}")
+    public ResponseEntity<HttpStatus> deleteQuestion(@PathVariable Integer postId, @PathVariable Integer questionId){
+        questionService.deleteQuestion(postId, questionId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
