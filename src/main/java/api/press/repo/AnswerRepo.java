@@ -18,7 +18,6 @@ public class AnswerRepo implements IAnswerRepo {
 
     @Override
     public Integer add(Answer answer) {
-        System.out.println(answer.toString());
         String query = "insert into answer (question_id, actor_id, actor_name, body, create_date) values(?, ?, ?, ?, ?)";
         ArrayList<? super Object> values = new ArrayList<>();
         Collections.addAll(values, answer.getQuestionId(), answer.getActorId(), answer.getActorName(), answer.getBody(), answer.getCreateDate());
