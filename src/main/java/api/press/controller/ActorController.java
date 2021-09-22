@@ -1,7 +1,9 @@
 package api.press.controller;
 
 import api.press.model.Actor;
+import api.press.model.Answer;
 import api.press.model.Post;
+import api.press.service.AnswerService;
 import api.press.service.IActorService;
 import api.press.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,8 @@ import java.util.List;
 public class ActorController {
     private final IActorService actorService;
     private final PostService postService;
+    private final AnswerService answerService;
+
 
     @PostMapping
     public ResponseEntity<Actor> register(@RequestBody Actor person) {
@@ -48,5 +52,11 @@ public class ActorController {
     @GetMapping("/wall")
     public ResponseEntity<List<Post>> Wall(){
         return new ResponseEntity<>(postService.getWallPosts(), HttpStatus.OK);
+    }
+
+    @PostMapping("/posts/questions/{questionId}/answers")
+    public ResponseEntity<Answer> addAnswer(@PathVariable Integer questionId,
+                                            @RequestBody Answer answer){
+        return new ResponseEntity<>(answerService.addAnswer(questionId, answer), HttpStatus.CREATED);
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("api/v1/editors")
 public class EditorController {
     private final PostService postService;
-    private final AnswerService answerService;
 
     @PostMapping("/posts")
     public ResponseEntity<HttpStatus> createPost(@RequestBody Post post){
@@ -39,12 +38,6 @@ public class EditorController {
     @GetMapping("/posts")
     public  ResponseEntity<List<Post>> getHistory(){
         return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
-    }
-
-    @PostMapping("/questions/{questionId}/answers")
-            public ResponseEntity<Answer> addAnswer(@PathVariable Integer questionId,
-                                                    @RequestBody Answer answer){
-        return new ResponseEntity<>(answerService.addAnswer(questionId, answer), HttpStatus.CREATED);
     }
 
 }
