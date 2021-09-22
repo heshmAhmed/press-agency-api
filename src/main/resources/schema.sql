@@ -68,9 +68,12 @@ CREATE TABLE question(
 CREATE TABLE answer(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     question_id INTEGER NOT NULL,
+    actor_id INTEGER NOT NULL,
+    actor_name VARCHAR(250) NOT NULL,
     body text Not Null,
     create_date datetime NOT NULL,
-    FOREIGN KEY (question_id) REFERENCES question(id)
+    FOREIGN KEY (question_id) REFERENCES question(id),
+    FOREIGN KEY (actor_id) REFERENCES actor(id)
 );
 
 CREATE TRIGGER after_insert_interaction

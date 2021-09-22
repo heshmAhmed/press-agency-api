@@ -11,6 +11,8 @@ import java.util.Date;
 public class Answer {
     private Integer id;
     private Integer questionId;
+    private Integer actorId;
+    private String actorName;
     private String body;
     private Date createDate;
 }
