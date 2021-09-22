@@ -13,7 +13,7 @@ public class AnswerService {
     private final IAnswerRepo answerRepo;
     private final TokenUtil tokenUtil;
 
-    public Answer addAnswer(Integer questionId,Answer answer){
+    public Answer addAnswer(Integer questionId,Answer answer) throws RuntimeException{
         answer.setQuestionId(questionId);
         answer.setActorId(tokenUtil.getCurrentWebToken().getId());
         answer.setActorName(tokenUtil.getCurrentWebToken().getUsername());
@@ -23,5 +23,18 @@ public class AnswerService {
             throw new RuntimeException("Question not found or bad content!");
         }
         return answer;
+    }
+
+    public void updateAnswer(Answer answer) throws RuntimeException{
+        answer.setActorId(tokenUtil.getCurrentWebToken().getId());
+        int rs;
+        try {
+            rs = answerRepo.update(answer);
+        }catch (DataIntegrityViolationException e){
+            throw new RuntimeException("Bad body content!");
+        }
+
+        if(rs == 0)
+            throw new RuntimeException("Answer not found!");
     }
 }

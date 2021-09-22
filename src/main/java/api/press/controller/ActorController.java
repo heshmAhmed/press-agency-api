@@ -22,8 +22,6 @@ import java.util.List;
 public class ActorController {
     private final IActorService actorService;
     private final PostService postService;
-    private final AnswerService answerService;
-
 
     @PostMapping
     public ResponseEntity<Actor> register(@RequestBody Actor person) {
@@ -54,9 +52,5 @@ public class ActorController {
         return new ResponseEntity<>(postService.getWallPosts(), HttpStatus.OK);
     }
 
-    @PostMapping("/posts/questions/{questionId}/answers")
-    public ResponseEntity<Answer> addAnswer(@PathVariable Integer questionId,
-                                            @RequestBody Answer answer){
-        return new ResponseEntity<>(answerService.addAnswer(questionId, answer), HttpStatus.CREATED);
-    }
+
 }

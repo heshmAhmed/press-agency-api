@@ -23,4 +23,12 @@ public class AnswerRepo implements IAnswerRepo {
         Collections.addAll(values, answer.getQuestionId(), answer.getActorId(), answer.getActorName(), answer.getBody(), answer.getCreateDate());
         return QueryUtil.insertRow(jdbcTemplate, query, values);
     }
+
+    @Override
+    public int update(Answer answer) {
+        return jdbcTemplate.update("update answer set body = ? where id = ? and actor_id = ?",
+                answer.getBody(),
+                answer.getId(),
+                answer.getActorId());
+    }
 }
