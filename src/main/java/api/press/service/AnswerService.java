@@ -37,4 +37,10 @@ public class AnswerService {
         if(rs == 0)
             throw new RuntimeException("Answer not found!");
     }
+
+    public void deleteAnswer(Integer answerId) throws RuntimeException{
+        int rs = answerRepo.delete(answerId, tokenUtil.getCurrentWebToken().getId());
+        if(rs == 0)
+            throw new RuntimeException("Answer not found!");
+    }
 }

@@ -54,4 +54,9 @@ public class EditorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("posts/questions/answers/{answerId}")
+    public ResponseEntity<HttpStatus> deleteAnswer(@PathVariable Integer answerId){
+        answerService.deleteAnswer(answerId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

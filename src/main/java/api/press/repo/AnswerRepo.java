@@ -31,4 +31,10 @@ public class AnswerRepo implements IAnswerRepo {
                 answer.getId(),
                 answer.getActorId());
     }
+
+    @Override
+    public int delete(Integer id, Integer actorId) {
+        return jdbcTemplate.update("delete from answer where id = ? and actor_id = ?",
+                id, actorId);
+    }
 }
