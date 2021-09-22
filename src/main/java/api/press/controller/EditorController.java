@@ -1,6 +1,8 @@
 package api.press.controller;
 
+import api.press.model.Answer;
 import api.press.model.Post;
+import api.press.service.AnswerService;
 import api.press.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1/editors")
 public class EditorController {
     private final PostService postService;
+    private final AnswerService answerService;
 
     @PostMapping("/posts")
     public ResponseEntity<HttpStatus> createPost(@RequestBody Post post){
@@ -33,9 +36,15 @@ public class EditorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("posts")
+    @GetMapping("/posts")
     public  ResponseEntity<List<Post>> getHistory(){
         return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
+    }
+
+    @PostMapping("/questions/{questionId}/answers")
+            public ResponseEntity<Answer> addAnswer(@PathVariable Integer questionId,
+                                                    @RequestBody Answer answer){
+        return new ResponseEntity<>(answerService.addAnswer(questionId, answer), HttpStatus.CREATED);
     }
 
 }
