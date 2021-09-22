@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Interaction {
     private Integer id;
-    private Viewer viewer;
-    private Post post;
-    private boolean is_like;
+    private Integer viewerId;
+    private Integer postId;
+    private Boolean isLike;
 }

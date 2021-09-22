@@ -49,7 +49,7 @@ CREATE TABLE saved_post(
 CREATE TABLE interaction(
     viewer_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
-    is_like boolean,
+    is_like boolean NOT NULL ,
     PRIMARY KEY (viewer_id, post_id),
     FOREIGN KEY (viewer_id) REFERENCES actor(id),
     FOREIGN KEY (post_id) REFERENCES  post(id)
@@ -73,3 +73,37 @@ CREATE TABLE answer(
     FOREIGN KEY (question_id) REFERENCES question(id)
 );
 
+CREATE TRIGGER after_insert_interaction
+    AFTER INSERT ON interaction
+    FOR EACH ROW
+    BEGIN
+         IF NEW.is_like = 1 THEN
+             update post set no_likes = no_likes + 1 where post.id = NEW.post_id;
+        ELSE
+             update post set no_dislikes = no_dislikes + 1 where post.id = NEW.post_id;
+         end if;
+    END;
+
+CREATE TRIGGER after_update_interaction
+    AFTER UPDATE ON interaction
+    FOR EACH ROW
+    BEGIN
+        IF NEW.is_like != OLD.is_like THEN
+            IF NEW.is_like = 1 THEN
+                update post set no_likes = no_likes + 1, no_dislikes = no_dislikes - 1 where id = NEW.post_id;
+            ELSE
+                update post set no_dislikes = no_dislikes + 1, no_likes = no_likes - 1 where id = NEW.post_id;
+            END IF;
+        END IF;
+    END;
+
+CREATE TRIGGER after_delete_interaction
+    AFTER DELETE ON interaction
+    FOR EACH ROW
+    BEGIN
+        IF OLD.is_like = 1 THEN
+            update post set no_likes = no_likes - 1 where id = OLD.post_id;
+        ELSE
+            update post set  no_dislikes = no_dislikes - 1 where id = OLD.post_id;
+        END IF;
+    END;

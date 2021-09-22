@@ -1,7 +1,7 @@
 package api.press.repo.IRepo;
 
+import api.press.model.Interaction;
+
 public interface IInteractionRepo {
-//    Optional<Interaction> addLikeInteraction(Integer postId, Integer userId);
-//    Optional<Interaction> addDisLikeInteraction(Integer postId, Integer userId);
-//    Optional<Interaction> isInteractionExist(Integer postId, Integer userId);
+    int add(Interaction interaction);
 }

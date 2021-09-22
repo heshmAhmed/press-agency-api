@@ -1,7 +1,9 @@
 package api.press.controller;
 
+import api.press.model.Interaction;
 import api.press.model.Post;
 import api.press.model.Question;
+import api.press.service.InteractionService;
 import api.press.service.QuestionService;
 import api.press.service.SavedPostService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.Map;
 public class ViewerController {
     private final SavedPostService savedPostService;
     private final QuestionService questionService;
+    private final InteractionService interactionService;
 
     @PostMapping("/viewers/saved-posts")
     public ResponseEntity<HttpStatus> addSavedPost(@RequestBody Map<String, Integer> requestBody){
@@ -55,5 +58,13 @@ public class ViewerController {
     public ResponseEntity<HttpStatus> deleteQuestion(@PathVariable Integer postId, @PathVariable Integer questionId){
         questionService.deleteQuestion(postId, questionId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("posts/{postId}/interactions")
+    public ResponseEntity<HttpStatus> interaction(@PathVariable Integer postId,
+                                                  @RequestBody Interaction interaction){
+        System.out.println(interaction.toString());
+        interactionService.addInteraction(postId, interaction);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
