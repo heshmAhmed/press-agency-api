@@ -22,4 +22,10 @@ public class InteractionRepo implements IInteractionRepo {
                 interaction.getIsLike(),
                 interaction.getIsLike());
     }
+
+    @Override
+    public int delete(Integer postId, Integer id) {
+        return jdbcTemplate.update("delete from interaction where post_id = ? and viewer_id = ?",
+                postId, id);
+    }
 }

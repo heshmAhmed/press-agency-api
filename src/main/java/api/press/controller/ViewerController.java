@@ -61,10 +61,15 @@ public class ViewerController {
     }
 
     @PostMapping("posts/{postId}/interactions")
-    public ResponseEntity<HttpStatus> interaction(@PathVariable Integer postId,
+    public ResponseEntity<HttpStatus> interact(@PathVariable Integer postId,
                                                   @RequestBody Interaction interaction){
-        System.out.println(interaction.toString());
         interactionService.addInteraction(postId, interaction);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/posts/{postId}/interactions")
+    public ResponseEntity<HttpStatus> deleteInteraction(@PathVariable Integer postId){
+        interactionService.deleteInteraction(postId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

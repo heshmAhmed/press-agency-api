@@ -23,4 +23,10 @@ public class InteractionService {
         }
 
     }
+
+    public void deleteInteraction(Integer postId) throws RuntimeException{
+        int rs = interactionRepo.delete(postId, tokenUtil.getCurrentWebToken().getId());
+        if(rs == 0)
+            throw new RuntimeException("Interaction not found!");
+    }
 }

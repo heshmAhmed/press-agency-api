@@ -3,6 +3,7 @@
 
 -- insert into actor (first_name, last_name, email, password, phone, username, role)
 -- values ('hesham', 'ahmed', 'hesham@gmail.com', '1234', '01121', 'heshamahmed', 'admin');
+drop table interaction
 -- insert into post_type (type)
 -- values ('sports');
 --
