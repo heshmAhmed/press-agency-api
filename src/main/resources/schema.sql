@@ -18,8 +18,10 @@ CREATE TABLE actor (
     photo varchar(250),
     username varchar(250) NOT NULL ,
     role_id INTEGER NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES role(id)
+    FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE unique INDEX index_email ON actor (email);
+CREATE unique INDEX index_username ON actor (username);
 
 CREATE TABLE post(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
@@ -30,19 +32,19 @@ CREATE TABLE post(
     no_views INTEGER NOT NULL,
     no_likes INTEGER NOT NULL,
     no_dislikes INTEGER NOT NULL,
-    create_date datetime,
+    create_date datetime NOT NULL ,
     state boolean,
     type_id Integer NOT NULL ,
-    FOREIGN KEY (editor_id) REFERENCES actor(id),
-    FOREIGN KEY (type_id) REFERENCES post_type(id)
+    FOREIGN KEY (editor_id) REFERENCES actor(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+    FOREIGN KEY (type_id) REFERENCES post_type(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE saved_post(
     viewer_id INTEGER NOT NULL,
     post_id INTEGER NOT NULL,
-    create_date datetime,
-    FOREIGN KEY (viewer_id) REFERENCES actor(id),
-    FOREIGN KEY (post_id) REFERENCES post(id),
+    create_date datetime NOT NULL ,
+    FOREIGN KEY (viewer_id) REFERENCES actor(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+    FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE ON UPDATE CASCADE ,
     primary key (viewer_id, post_id)
 );
 
@@ -51,8 +53,8 @@ CREATE TABLE interaction(
     post_id INTEGER NOT NULL,
     is_like boolean NOT NULL ,
     PRIMARY KEY (viewer_id, post_id),
-    FOREIGN KEY (viewer_id) REFERENCES actor(id),
-    FOREIGN KEY (post_id) REFERENCES  post(id)
+    FOREIGN KEY (viewer_id) REFERENCES actor(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+    FOREIGN KEY (post_id) REFERENCES  post(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE question(
@@ -61,8 +63,8 @@ CREATE TABLE question(
     viewer_id INTEGER NOT NULL,
     body VARCHAR(250) NOT NULL ,
     create_date datetime NOT NULL ,
-    FOREIGN KEY (post_id) REFERENCES post(id),
-    FOREIGN KEY (viewer_id) REFERENCES actor(id)
+    FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+    FOREIGN KEY (viewer_id) REFERENCES actor(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE answer(
@@ -72,8 +74,8 @@ CREATE TABLE answer(
     actor_name VARCHAR(250) NOT NULL,
     body text Not Null,
     create_date datetime NOT NULL,
-    FOREIGN KEY (question_id) REFERENCES question(id),
-    FOREIGN KEY (actor_id) REFERENCES actor(id)
+    FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE ON UPDATE CASCADE ,
+    FOREIGN KEY (actor_id) REFERENCES actor(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TRIGGER after_insert_interaction
