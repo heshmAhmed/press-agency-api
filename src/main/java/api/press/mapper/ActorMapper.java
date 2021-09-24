@@ -30,14 +30,14 @@ public class ActorMapper implements RowMapper<Actor> {
     private Actor createActor(int role_id){
         Role role = roleRepo.getActorRole(role_id);
         Actor actor;
-        if(role.getName().equals(ActorType.ADMIN.name()))
+        if(role.getName().equalsIgnoreCase(ActorType.ADMIN.name()))
             actor = new Admin();
-        else if (role.getName().equals(ActorType.EDITOR.name()))
+        else if (role.getName().equalsIgnoreCase(ActorType.EDITOR.name()))
             actor = new Editor();
-        else if (role.getName().equals(ActorType.VIEWER.name()))
+        else if (role.getName().equalsIgnoreCase(ActorType.VIEWER.name()))
             actor = new Viewer();
         else
-            throw new IllegalStateException("Unexpected value: " + role_id);
+            throw new IllegalStateException("Unexpected role: " + role);
         actor.setRole(role);
         return actor;
     }

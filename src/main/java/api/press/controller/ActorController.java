@@ -23,13 +23,13 @@ public class ActorController {
     private final IActorService actorService;
     private final PostService postService;
 
-    @PostMapping
+    @PostMapping("/actors")
     public ResponseEntity<Actor> register(@RequestBody Actor person) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/actor/insert").toUriString());
         return ResponseEntity.created(uri).body(actorService.createActor(person));
     }
 
-    @PutMapping
+    @PutMapping("/actors")
     public ResponseEntity<HttpStatus> update(@RequestBody Actor actor){
         actorService.updateActor(actor);
         return new ResponseEntity<>(HttpStatus.OK);
